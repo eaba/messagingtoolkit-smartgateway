@@ -47,9 +47,9 @@
             this.lnkMonitorChannel = new System.Windows.Forms.LinkLabel();
             this.lnkManageChannel = new System.Windows.Forms.LinkLabel();
             this.lnkDeleteChannel = new System.Windows.Forms.LinkLabel();
-            this.controlFooter1 = new MessagingToolkit.SmartGateway.Core.ControlFooter();
             this.lnkAddChannel = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.controlFooter1 = new MessagingToolkit.SmartGateway.Core.ControlFooter();
             this.controlHeader1 = new MessagingToolkit.SmartGateway.Core.ControlHeader();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lvwChannels)).BeginInit();
@@ -97,6 +97,7 @@
             this.lvwChannels.UseAlternatingBackColors = true;
             this.lvwChannels.UseCompatibleStateImageBehavior = false;
             this.lvwChannels.View = System.Windows.Forms.View.Details;
+            this.lvwChannels.DoubleClick += new System.EventHandler(this.lvwChannels_DoubleClick);
             // 
             // olvColumn1
             // 
@@ -178,6 +179,8 @@
             this.lnkChannelWizard.TabIndex = 8;
             this.lnkChannelWizard.TabStop = true;
             this.lnkChannelWizard.Text = "Channel Wizard";
+            this.lnkChannelWizard.Visible = false;
+            this.lnkChannelWizard.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChannelWizard_LinkClicked);
             // 
             // lnkMonitorChannel
             // 
@@ -188,6 +191,7 @@
             this.lnkMonitorChannel.TabIndex = 7;
             this.lnkMonitorChannel.TabStop = true;
             this.lnkMonitorChannel.Text = "Monitor Channel";
+            this.lnkMonitorChannel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMonitorChannel_LinkClicked);
             // 
             // lnkManageChannel
             // 
@@ -198,6 +202,7 @@
             this.lnkManageChannel.TabIndex = 6;
             this.lnkManageChannel.TabStop = true;
             this.lnkManageChannel.Text = "Manage Channel";
+            this.lnkManageChannel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkManageChannel_LinkClicked);
             // 
             // lnkDeleteChannel
             // 
@@ -209,15 +214,6 @@
             this.lnkDeleteChannel.TabStop = true;
             this.lnkDeleteChannel.Text = "Delete Channel";
             this.lnkDeleteChannel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDeleteChannel_LinkClicked);
-            // 
-            // controlFooter1
-            // 
-            this.controlFooter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.controlFooter1.Location = new System.Drawing.Point(0, 26);
-            this.controlFooter1.Message = "Click on the channel for details. Right click for more options.";
-            this.controlFooter1.Name = "controlFooter1";
-            this.controlFooter1.Size = new System.Drawing.Size(565, 66);
-            this.controlFooter1.TabIndex = 4;
             // 
             // lnkAddChannel
             // 
@@ -237,6 +233,15 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 2;
+            // 
+            // controlFooter1
+            // 
+            this.controlFooter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.controlFooter1.Location = new System.Drawing.Point(0, 26);
+            this.controlFooter1.Message = "Click on the channel for details. Right click for more options.";
+            this.controlFooter1.Name = "controlFooter1";
+            this.controlFooter1.Size = new System.Drawing.Size(565, 66);
+            this.controlFooter1.TabIndex = 4;
             // 
             // controlHeader1
             // 

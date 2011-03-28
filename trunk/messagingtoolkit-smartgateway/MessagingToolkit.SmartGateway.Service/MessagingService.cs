@@ -321,6 +321,7 @@ namespace MessagingToolkit.SmartGateway.Service
                 mobileGateway.Id = gwConfig.Id;
                 mobileGateway.EnableNewMessageNotification(MessageNotification.StatusReport);
                 mobileGateway.PollNewMessages = true;
+                
                 // Todo: Delete message after receiving
 
                 mobileGateway.MessageReceived += new MessageReceivedEventHandler(mobileGateway_MessageReceived);

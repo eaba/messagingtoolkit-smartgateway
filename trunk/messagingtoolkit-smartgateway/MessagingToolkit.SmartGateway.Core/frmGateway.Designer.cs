@@ -106,6 +106,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tcGatewayConfig.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -552,6 +553,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.checkBox1);
             this.groupBox6.Controls.Add(this.chkRequestDeliveryStatusReport);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.updSendDelay);
@@ -566,14 +568,14 @@
             this.groupBox6.Controls.Add(this.label13);
             this.groupBox6.Location = new System.Drawing.Point(10, 4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(333, 203);
+            this.groupBox6.Size = new System.Drawing.Size(333, 214);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             // 
             // chkRequestDeliveryStatusReport
             // 
             this.chkRequestDeliveryStatusReport.AutoSize = true;
-            this.chkRequestDeliveryStatusReport.Location = new System.Drawing.Point(15, 174);
+            this.chkRequestDeliveryStatusReport.Location = new System.Drawing.Point(15, 171);
             this.chkRequestDeliveryStatusReport.Name = "chkRequestDeliveryStatusReport";
             this.chkRequestDeliveryStatusReport.Size = new System.Drawing.Size(166, 17);
             this.chkRequestDeliveryStatusReport.TabIndex = 43;
@@ -997,12 +999,22 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(15, 191);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(172, 17);
+            this.checkBox1.TabIndex = 44;
+            this.checkBox1.Text = "Delete message after retrieving";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // frmGateway
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(375, 306);
+            this.ClientSize = new System.Drawing.Size(371, 302);
             this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -1136,5 +1148,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox txtPhoneNo;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

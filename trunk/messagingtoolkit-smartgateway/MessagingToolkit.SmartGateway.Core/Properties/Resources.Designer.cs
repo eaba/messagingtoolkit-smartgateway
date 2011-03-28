@@ -169,6 +169,13 @@ namespace MessagingToolkit.SmartGateway.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap help32 {
+            get {
+                object obj = ResourceManager.GetObject("help32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap hide_me {
             get {
                 object obj = ResourceManager.GetObject("hide_me", resourceCulture);
@@ -427,6 +434,15 @@ namespace MessagingToolkit.SmartGateway.Core.Properties {
         internal static string MsgLicenseeRequired {
             get {
                 return ResourceManager.GetString("MsgLicenseeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensing information is saved.
+        /// </summary>
+        internal static string MsgLicenseInformationSaved {
+            get {
+                return ResourceManager.GetString("MsgLicenseInformationSaved", resourceCulture);
             }
         }
         

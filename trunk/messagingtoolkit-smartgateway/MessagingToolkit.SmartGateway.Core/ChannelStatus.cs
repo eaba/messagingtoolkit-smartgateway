@@ -17,7 +17,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this software.  If not, see <http://www.gnu.org/licenses/>.
 //===============================================================================
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,13 +29,26 @@ using System.Windows.Forms;
 namespace MessagingToolkit.SmartGateway.Core
 {
     /// <summary>
-    /// Message archive
+    /// Channel status
     /// </summary>
-    public partial class Archive : UserControl
+    public partial class ChannelStatus : UserControl
     {
-        public Archive()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChannelStatus"/> class.
+        /// </summary>
+        public ChannelStatus()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Handles the Load event of the ChannelStatus control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void ChannelStatus_Load(object sender, EventArgs e)
+        {
+            if (this.DesignMode) return;
         }
     }
 }

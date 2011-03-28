@@ -79,8 +79,8 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
                     // Configure the settings
                     ConfigureAppConfig();
 
-                    Application.Run(new frmControlPanel());
-                    //Application.Run(new frmTestForm());
+                    //Application.Run(new frmControlPanel());
+                    Application.Run(new frmTestForm());
                     //Application.Run(new frmGateway());
                 }
             }

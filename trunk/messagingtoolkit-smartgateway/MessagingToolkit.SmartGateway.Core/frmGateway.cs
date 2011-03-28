@@ -57,6 +57,11 @@ namespace MessagingToolkit.SmartGateway.Core
         /// Occurs when a new gateway added.
         /// </summary>
         public event NewGatewayEventHandler GatewayAdded;
+
+        /// <summary>
+        /// Occurs when a gateway is updated.
+        /// </summary>
+        public event UpdateGatewayEventHandler GatewayUpdated;
                 
         #endregion
 
@@ -447,6 +452,14 @@ namespace MessagingToolkit.SmartGateway.Core
                     GatewayEventHandlerArgs arg = new GatewayEventHandlerArgs(gatewayId);
                     this.GatewayAdded.BeginInvoke(this, arg, new AsyncCallback(this.AsyncCallback), null);
                 }
+
+                if (GatewayUpdated != null)
+                {
+                    // Raise the event
+                    GatewayEventHandlerArgs arg = new GatewayEventHandlerArgs(gatewayId);
+                    this.GatewayUpdated.BeginInvoke(this, arg, new AsyncCallback(this.AsyncCallback), null);
+                }
+
             }
             catch (Exception ex)
             {
@@ -475,6 +488,10 @@ namespace MessagingToolkit.SmartGateway.Core
             if (result.AsyncDelegate is NewGatewayEventHandler)
             {
                 ((NewGatewayEventHandler)result.AsyncDelegate).EndInvoke(result);
+            }
+            else if (result.AsyncDelegate is UpdateGatewayEventHandler)
+            {
+                ((UpdateGatewayEventHandler)result.AsyncDelegate).EndInvoke(result);
             }
             else
             {

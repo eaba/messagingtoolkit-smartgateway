@@ -602,4 +602,10 @@ namespace MessagingToolkit.SmartGateway.Core
     public delegate void DeleteGatewayEventHandler(object sender, GatewayEventHandlerArgs e);
 
 
+    /// <summary>
+    /// Gateway updated event handler
+    /// </summary>
+    public delegate void UpdateGatewayEventHandler(object sender, GatewayEventHandlerArgs e);
+
+
 }

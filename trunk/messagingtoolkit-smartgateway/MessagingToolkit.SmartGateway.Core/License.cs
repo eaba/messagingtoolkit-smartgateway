@@ -27,6 +27,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using MessagingToolkit.UI;
+using MessagingToolkit.Core;
+using MessagingToolkit.Core.Helper;
+using MessagingToolkit.SmartGateway.Core.Data.ActiveRecord;
+using MessagingToolkit.SmartGateway.Core.Properties;
+using MessagingToolkit.SmartGateway.Core.Helper;
+
 namespace MessagingToolkit.SmartGateway.Core
 {
     /// <summary>
@@ -34,6 +41,9 @@ namespace MessagingToolkit.SmartGateway.Core
     /// </summary>
     public partial class License : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="License"/> class.
+        /// </summary>
         public License()
         {
             InitializeComponent();
@@ -46,7 +56,58 @@ namespace MessagingToolkit.SmartGateway.Core
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void License_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode) return;
 
+            InitializeForm();
+
+        }
+
+        /// <summary>
+        /// Initializes the form.
+        /// </summary>
+        private void InitializeForm()
+        {
+            AppConfig licensee = AppConfig.SingleOrDefault(ac => ac.Name == ConfigParameter.Licensee);
+            txtLicensee.Text = licensee.Value;
+
+            AppConfig licenseKey = AppConfig.SingleOrDefault(ac => ac.Name == ConfigParameter.LicenseKey);
+            txtLicenseKey.Text = licenseKey.Value;
+            txtLicensee.Focus();
+        }
+
+        /// <summary>
+        /// Handles the Click event of the btnReset control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            InitializeForm();            
+        }
+
+        /// <summary>
+        /// Handles the Click event of the btnOK control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AppConfig licensee = AppConfig.SingleOrDefault(ac => ac.Name == ConfigParameter.Licensee);
+                licensee.Value = txtLicensee.Text;
+                licensee.Update();
+
+                AppConfig licenseKey = AppConfig.SingleOrDefault(ac => ac.Name == ConfigParameter.LicenseKey);
+                licenseKey.Value = txtLicenseKey.Text;
+                licenseKey.Update();
+
+                FormHelper.ShowInfo(Resources.MsgLicenseInformationSaved);
+            }
+            catch (Exception ex)
+            {
+                FormHelper.ShowError(ex.Message);
+            }
         }
     }
 }

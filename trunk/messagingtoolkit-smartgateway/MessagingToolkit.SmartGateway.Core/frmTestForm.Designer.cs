@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.contactUsers1 = new MessagingToolkit.SmartGateway.Core.ContactUsers();
+            this.channelStatus1 = new MessagingToolkit.SmartGateway.Core.ChannelStatus();
             this.SuspendLayout();
             // 
-            // contactUsers1
+            // channelStatus1
             // 
-            this.contactUsers1.Location = new System.Drawing.Point(12, 12);
-            this.contactUsers1.Name = "contactUsers1";
-            this.contactUsers1.Size = new System.Drawing.Size(764, 587);
-            this.contactUsers1.TabIndex = 0;
+            this.channelStatus1.Location = new System.Drawing.Point(12, 12);
+            this.channelStatus1.Name = "channelStatus1";
+            this.channelStatus1.Size = new System.Drawing.Size(779, 612);
+            this.channelStatus1.TabIndex = 0;
             // 
             // frmTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 673);
-            this.Controls.Add(this.contactUsers1);
+            this.Controls.Add(this.channelStatus1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -57,7 +57,11 @@
 
         #endregion
 
-        private ContactUsers contactUsers1;
+        private ChannelStatus channelStatus1;
+
+
+
+
 
 
 

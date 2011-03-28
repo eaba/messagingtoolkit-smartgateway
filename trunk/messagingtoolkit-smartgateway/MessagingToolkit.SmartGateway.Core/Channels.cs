@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using MessagingToolkit.Core;
 using MessagingToolkit.SmartGateway.Core.Data.ActiveRecord;
 using MessagingToolkit.SmartGateway.Core.Properties;
 using MessagingToolkit.SmartGateway.Core.Helper;
@@ -51,9 +52,21 @@ namespace MessagingToolkit.SmartGateway.Core
         /// </summary>
         public event DeleteGatewayEventHandler GatewayRemoved;
 
-      
+
+        /// <summary>
+        /// Occurs when gateway is updated.
+        /// </summary>
+        public event UpdateGatewayEventHandler GatewayUpdated;
+
+            
         #endregion  // ----------------- Event ------------
 
+        // ---- Delegate ----
+
+        /// <summary>
+        /// Callback method to set the messages
+        /// </summary>
+        private delegate void SetListCallback();
 
 
         /// <summary>
@@ -75,8 +88,9 @@ namespace MessagingToolkit.SmartGateway.Core
             gatewayForm.GatewayAdded += new NewGatewayEventHandler(gatewayForm_GatewayAdded);
             DialogResult result = gatewayForm.ShowDialog();
 
-            // Autoresize 
-            this.lvwChannels.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+            if (result == DialogResult.OK)
+                // Autoresize 
+                this.lvwChannels.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
         /// <summary>
@@ -109,6 +123,10 @@ namespace MessagingToolkit.SmartGateway.Core
             } else if (result.AsyncDelegate is DeleteGatewayEventHandler)
             {
                 ((DeleteGatewayEventHandler)result.AsyncDelegate).EndInvoke(result);
+            }
+            else if (result.AsyncDelegate is UpdateGatewayEventHandler)
+            {
+                ((UpdateGatewayEventHandler)result.AsyncDelegate).EndInvoke(result);
             }
             else 
             {
@@ -209,5 +227,114 @@ namespace MessagingToolkit.SmartGateway.Core
             }
 
         }
+
+        /// <summary>
+        /// Handles the DoubleClick event of the lvwChannels control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void lvwChannels_DoubleClick(object sender, EventArgs e)
+        {
+            EditChannel();
+        }
+
+        /// <summary>
+        /// Handles the LinkClicked event of the lnkManageChannel control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.LinkLabelLinkClickedEventArgs"/> instance containing the event data.</param>
+        private void lnkManageChannel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            EditChannel();
+        }
+
+        /// <summary>
+        /// Edits the channel.
+        /// </summary>
+        private void EditChannel()
+        {
+            object obj = lvwChannels.SelectedObject;
+            if (obj != null)
+            {
+                GatewayConfig gwConfig = obj as GatewayConfig;
+
+                frmGateway gatewayForm = new frmGateway();
+                gatewayForm.GatewayUpdated += new UpdateGatewayEventHandler(gatewayForm_GatewayUpdated);
+                gatewayForm.GatewayId = gwConfig.Id;
+
+                DialogResult result = gatewayForm.ShowDialog();
+                if (result == DialogResult.OK)
+                    // Autoresize 
+                    this.lvwChannels.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+            }
+        }
+
+        /// <summary>
+        /// Invoked when a gateway is updated
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
+        private void gatewayForm_GatewayUpdated(object sender, GatewayEventHandlerArgs e)
+        {
+            GatewayConfig updatedChannel = GatewayConfig.SingleOrDefault(g => g.Id == e.GatewayId);
+
+            // Refresh the list view
+            RefreshView();
+
+            if (GatewayUpdated != null)
+            {
+                // Raise the event
+                GatewayEventHandlerArgs arg = new GatewayEventHandlerArgs(e.GatewayId);
+                this.GatewayUpdated.BeginInvoke(this, arg, new AsyncCallback(this.AsyncCallback), null);
+            }
+        }
+
+        /// <summary>
+        /// Shows the messages.
+        /// </summary>
+        public void RefreshView()
+        {
+            if (this.lvwChannels.InvokeRequired)
+            {
+                SetListCallback callback = new SetListCallback(RefreshView);
+                this.Invoke(callback);
+            }
+            else
+            {
+                GatewayConfig selectedConfig = lvwChannels.SelectedObject as GatewayConfig;
+                lvwChannels.BeginUpdate();
+                lvwChannels.ClearObjects();
+                lvwChannels.SetObjects(GatewayConfig.All());
+                lvwChannels.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+                lvwChannels.AutoResizeColumn(2, ColumnHeaderAutoResizeStyle.HeaderSize);
+                if (selectedConfig != null)
+                {
+                    lvwChannels.SelectObject(selectedConfig);
+                }
+                lvwChannels.EndUpdate();
+                lvwChannels.Refresh();              
+            }
+        }
+
+        /// <summary>
+        /// Handles the LinkClicked event of the lnkMonitorChannel control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.LinkLabelLinkClickedEventArgs"/> instance containing the event data.</param>
+        private void lnkMonitorChannel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Handles the LinkClicked event of the lnkChannelWizard control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.LinkLabelLinkClickedEventArgs"/> instance containing the event data.</param>
+        private void lnkChannelWizard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
     }
 }

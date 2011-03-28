@@ -169,6 +169,12 @@
     <Compile Include="Channels.Designer.cs">
       <DependentUpon>Channels.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChannelStatus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChannelStatus.Designer.cs">
+      <DependentUpon>ChannelStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChannelWizard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -499,6 +505,9 @@
       <DependentUpon>Channels.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChannelStatus.resx">
+      <DependentUpon>ChannelStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChannelWizard.resx">
       <DependentUpon>ChannelWizard.cs</DependentUpon>
     </EmbeddedResource>
@@ -745,6 +754,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manual.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
