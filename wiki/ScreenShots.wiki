@@ -1,13 +1,28 @@
-#summary One-sentence summary of this page.
+#summary Screenshots
 
-= Introduction =
+= Main Screen =
+http://messagingtoolkit-smartgateway.googlecode.com/files/main_screen.jpg
 
-Add your content here.
 
 
-= Details =
+= Message View = 
+http://messagingtoolkit-smartgateway.googlecode.com/files/message_view.jpg
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+= New Message = 
+http://messagingtoolkit-smartgateway.googlecode.com/files/new_message.jpg
+
+
+= Channel =
+= Message View = 
+http://messagingtoolkit-smartgateway.googlecode.com/files/channel.jpg
+
+
+= System =
+http://messagingtoolkit-smartgateway.googlecode.com/files/system.jpg
+
+
+= Group Management = 
+http://messagingtoolkit-smartgateway.googlecode.com/files/group_management.jpg
+
+
