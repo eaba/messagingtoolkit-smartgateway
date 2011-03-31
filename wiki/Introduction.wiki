@@ -2,12 +2,7 @@
 
 = Introduction =
 
-Add your content here.
+MessagingToolkit SmartGateway is an application built on top of the [http://twit88.com/platform/projects/show/messagingtoolkit MessagingToolkit] library which can be used to send and receive SMS
 
 
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
