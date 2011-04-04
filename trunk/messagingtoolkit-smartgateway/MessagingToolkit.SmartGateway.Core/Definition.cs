@@ -113,8 +113,29 @@ namespace MessagingToolkit.SmartGateway.Core
         /// Gateway is removed
         /// </summary>
         [StringValue("Remove Gateway")]
-        RemoveGateway
+        RemoveGateway,
+        /// <summary>
+        /// Check the gateway status
+        /// </summary>
+        [StringValue("Query Gateway Status")]
+        QueryGatewayStatus,
+        /// <summary>
+        /// Start gateway
+        /// </summary>
+        [StringValue("Start Gateway")]
+        StartGateway,
+        /// <summary>
+        /// Stop gateway
+        /// </summary>
+        [StringValue("Stop Gateway")]
+        StopGateway,
+        /// <summary>
+        /// Restart gateway
+        /// </summary>
+        [StringValue("Restart Gateway")]
+        RestartGateway
     }
+
 
     /// <summary>
     /// Event response
@@ -423,7 +444,7 @@ namespace MessagingToolkit.SmartGateway.Core
         /// <summary>
         /// Supported separators - e.g. list of phone numbers, emails
         /// </summary>
-        public static string[] SupportedSeparators = new string[] {",", ";"};
+        public static string[] SupportedSeparators = new string[] {";", ","};
 
 
         /// <summary>

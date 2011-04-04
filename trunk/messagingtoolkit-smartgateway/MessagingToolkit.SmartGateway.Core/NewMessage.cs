@@ -480,5 +480,35 @@ namespace MessagingToolkit.SmartGateway.Core
         /// <value>The message.</value>
         public IActiveRecord Message { get; set; }
 
+        /// <summary>
+        /// Handles the Click event of the btnBrowseTo control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void btnBrowseTo_Click(object sender, EventArgs e)
+        {
+            frmContactSearch contactSearchForm = new frmContactSearch();
+            if (contactSearchForm.ShowDialog(this) == DialogResult.OK)
+            {
+                string contactList = string.Empty;
+                foreach (User user in contactSearchForm.SelectedUsers)
+                {
+                    if (string.IsNullOrEmpty(contactList))
+                        contactList = user.Mobtel;
+                    else
+                        contactList = contactList + GuiHelper.SupportedSeparators[0] + user.Mobtel;
+                }
+
+                if (!string.IsNullOrEmpty(contactList))
+                {
+                    if (!string.IsNullOrEmpty(txtTo.Text))
+                    {
+                        txtTo.Text += GuiHelper.SupportedSeparators[0];
+                    }
+                    txtTo.Text += contactList;
+                }
+            }
+        }
+
     }
 }

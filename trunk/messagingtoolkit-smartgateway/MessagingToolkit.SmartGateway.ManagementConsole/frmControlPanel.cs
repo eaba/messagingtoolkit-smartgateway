@@ -114,6 +114,7 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void tsbStatusPanel_Click(object sender, EventArgs e)
         {
+            DisplayControl(ctlChannelStatus.Name);
             /*
             log.Debug("testing");
             EventAction action = new EventAction(StringEnum.GetStringValue(EventNotificationType.NewGateway));
@@ -163,13 +164,7 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
         /// Initializes the app.
         /// </summary>
         private void InitializeApp()
-        {
-            // Set to false
-            //CheckForIllegalCrossThreadCalls = false;
-            
-            panelConfiguration.ActionTrigger += new MenuPanel.ActionTriggerEventHandler(panelConfiguration_ActionTrigger);
-
-            
+        {             
             // Get the user controls
             userControlLookup = new Dictionary<string, Control>(10);
             foreach (Control control in this.Controls)
@@ -185,11 +180,16 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
             // Raise event when a new gateway is added or removed
             ctlChannels.GatewayAdded += new NewGatewayEventHandler(ctlChannels_GatewayAdded);
             ctlChannels.GatewayRemoved += new DeleteGatewayEventHandler(ctlChannels_GatewayRemoved);
+            
+            panelConfiguration.ActionTrigger += new MenuPanel.ActionTriggerEventHandler(panelConfiguration_ActionTrigger);
+
+            // Display start menu
+            DisplayControl(ctlStartMenu.Name);
            
         }
 
         /// <summary>
-        /// CTLs the channels_ gateway removed.
+        /// Handle gateway removed event
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The e.</param>
@@ -399,8 +399,16 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void tsbAbout_Click(object sender, EventArgs e)
+        {           
+            DisplayControl(ctlAbout.Name);           
+        }
+
+        /// <summary>
+        /// Displays the control.
+        /// </summary>
+        /// <param name="actionClass">The action class.</param>
+        private void DisplayControl(string actionClass)
         {
-            string actionClass = ctlAbout.Name;
             if (currentControl != null && currentControl.Name.Equals(actionClass, StringComparison.OrdinalIgnoreCase))
             {
                 // Click on the same menu item
@@ -423,6 +431,7 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
                 currentControl = control;
             }
         }
+
 
         /// <summary>
         /// Handles the Click event of the exitToolStripMenuItem control.

@@ -1377,6 +1377,16 @@ namespace MessagingToolkit.SmartGateway.Core.Data.ActiveRecord {
 	                IsForeignKey = false,
 	                MaxLength = 8
                 });
+
+                Columns.Add(new DatabaseColumn("DeleteAfterRetrieve", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Boolean,
+	                IsNullable = true,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 1
+                });
                     
                 
                 
@@ -1799,6 +1809,18 @@ namespace MessagingToolkit.SmartGateway.Core.Data.ActiveRecord {
    			public static string DeleteArchivedMessageIntervalColumn{
 			      get{
         			return "DeleteArchivedMessageInterval";
+      			}
+		    }
+            
+            public IColumn DeleteAfterRetrieve{
+                get{
+                    return this.GetColumn("DeleteAfterRetrieve");
+                }
+            }
+				
+   			public static string DeleteAfterRetrieveColumn{
+			      get{
+        			return "DeleteAfterRetrieve";
       			}
 		    }
             

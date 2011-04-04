@@ -169,6 +169,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="mobile-phone.ico" />
+    <Content Include="screencapture\channel.jpg" />
+    <Content Include="screencapture\group_management.jpg" />
+    <Content Include="screencapture\main_screen.jpg" />
+    <Content Include="screencapture\message_view.jpg" />
+    <Content Include="screencapture\new_message.jpg" />
+    <Content Include="screencapture\system.jpg" />
+    <Content Include="screencapture\user_management.jpg" />
     <None Include="Resources\exit.png" />
     <None Include="App.config">
       <SubType>Designer</SubType>

@@ -26,6 +26,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 using MessagingToolkit.Core;
 using MessagingToolkit.SmartGateway.Core.Data.ActiveRecord;
@@ -39,6 +40,10 @@ namespace MessagingToolkit.SmartGateway.Core
     /// </summary>
     public partial class Channels : UserControl
     {
+        /// <summary>
+        /// Supported method name
+        /// </summary>
+        public const string SupportedMethodName = "LinkClicked";
 
         #region // -------------- Event ------------------
 
@@ -323,7 +328,21 @@ namespace MessagingToolkit.SmartGateway.Core
         /// <param name="e">The <see cref="System.Windows.Forms.LinkLabelLinkClickedEventArgs"/> instance containing the event data.</param>
         private void lnkMonitorChannel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            MonitorChannel();            
+        }
 
+
+        /// <summary>
+        /// Monitors the channel.
+        /// </summary>
+        private void MonitorChannel()
+        {
+            Type type = this.ParentForm.GetType();
+            MethodInfo method = type.GetMethod(SupportedMethodName);
+            if (method != null)
+            {
+                method.Invoke(this.ParentForm, new object[] { new object[] { "ctlChannelStatus", string.Empty } });
+            }      
         }
 
         /// <summary>
@@ -334,6 +353,31 @@ namespace MessagingToolkit.SmartGateway.Core
         private void lnkChannelWizard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Handles the Click event of the modifyToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditChannel();
+        }
+
+        /// <summary>
+        /// Handles the Click event of the deleteToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Type type = this.ParentForm.GetType();
+            MethodInfo method = type.GetMethod(SupportedMethodName);
+            if (method != null)
+            {
+                method.Invoke(this.ParentForm, new object[] { new object[] { "ctlChannelStatus", string.Empty } });
+            }      
         }
 
     }

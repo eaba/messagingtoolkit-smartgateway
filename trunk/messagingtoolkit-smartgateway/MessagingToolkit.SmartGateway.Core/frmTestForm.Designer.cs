@@ -33,9 +33,9 @@
             // 
             // channelStatus1
             // 
-            this.channelStatus1.Location = new System.Drawing.Point(12, 12);
+            this.channelStatus1.Location = new System.Drawing.Point(12, 3);
             this.channelStatus1.Name = "channelStatus1";
-            this.channelStatus1.Size = new System.Drawing.Size(779, 612);
+            this.channelStatus1.Size = new System.Drawing.Size(799, 625);
             this.channelStatus1.TabIndex = 0;
             // 
             // frmTestForm
@@ -58,6 +58,9 @@
         #endregion
 
         private ChannelStatus channelStatus1;
+
+
+
 
 
 

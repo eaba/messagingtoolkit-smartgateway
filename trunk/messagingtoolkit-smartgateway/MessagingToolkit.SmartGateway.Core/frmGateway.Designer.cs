@@ -67,6 +67,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabMessageSettings = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkDeleteAfterRetrieve = new System.Windows.Forms.CheckBox();
             this.chkRequestDeliveryStatusReport = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.updSendDelay = new System.Windows.Forms.NumericUpDown();
@@ -106,7 +107,6 @@
             this.label19 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tcGatewayConfig.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -553,7 +553,7 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.checkBox1);
+            this.groupBox6.Controls.Add(this.chkDeleteAfterRetrieve);
             this.groupBox6.Controls.Add(this.chkRequestDeliveryStatusReport);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.updSendDelay);
@@ -571,6 +571,16 @@
             this.groupBox6.Size = new System.Drawing.Size(333, 214);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
+            // 
+            // chkDeleteAfterRetrieve
+            // 
+            this.chkDeleteAfterRetrieve.AutoSize = true;
+            this.chkDeleteAfterRetrieve.Location = new System.Drawing.Point(15, 191);
+            this.chkDeleteAfterRetrieve.Name = "chkDeleteAfterRetrieve";
+            this.chkDeleteAfterRetrieve.Size = new System.Drawing.Size(172, 17);
+            this.chkDeleteAfterRetrieve.TabIndex = 44;
+            this.chkDeleteAfterRetrieve.Text = "Delete message after retrieving";
+            this.chkDeleteAfterRetrieve.UseVisualStyleBackColor = true;
             // 
             // chkRequestDeliveryStatusReport
             // 
@@ -999,22 +1009,12 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 191);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(172, 17);
-            this.checkBox1.TabIndex = 44;
-            this.checkBox1.Text = "Delete message after retrieving";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // frmGateway
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(371, 302);
+            this.ClientSize = new System.Drawing.Size(376, 308);
             this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -1148,6 +1148,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox txtPhoneNo;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkDeleteAfterRetrieve;
     }
 }

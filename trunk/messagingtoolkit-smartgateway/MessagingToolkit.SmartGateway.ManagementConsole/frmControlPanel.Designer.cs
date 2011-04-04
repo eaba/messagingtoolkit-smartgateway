@@ -47,6 +47,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.ctlChannelStatus = new MessagingToolkit.SmartGateway.Core.ChannelStatus();
+            this.ctlManual = new MessagingToolkit.SmartGateway.Core.Manual();
+            this.ctlLicensing = new MessagingToolkit.SmartGateway.Core.License();
             this.ctlApplications = new MessagingToolkit.SmartGateway.Core.Applications();
             this.ctlContactUsers = new MessagingToolkit.SmartGateway.Core.ContactUsers();
             this.ctlContactGroups = new MessagingToolkit.SmartGateway.Core.ContactGroups();
@@ -68,8 +71,6 @@
             this.ctlConfigurationViewPanel = new MessagingToolkit.SmartGateway.Core.ConfigurationViewPanel();
             this.ctlStartMenu = new MessagingToolkit.SmartGateway.Core.StartMenu();
             this.panelConfiguration = new MessagingToolkit.SmartGateway.Core.MenuPanel();
-            this.ctlLicensing = new MessagingToolkit.SmartGateway.Core.License();
-            this.ctlManual = new MessagingToolkit.SmartGateway.Core.Manual();
             this.tsApplicationMain.SuspendLayout();
             this.mnsApplicationMain.SuspendLayout();
             this.SuspendLayout();
@@ -228,16 +229,37 @@
             this.splitter1.TabIndex = 6;
             this.splitter1.TabStop = false;
             // 
+            // ctlChannelStatus
+            // 
+            this.ctlChannelStatus.Location = new System.Drawing.Point(414, 128);
+            this.ctlChannelStatus.Name = "ctlChannelStatus";
+            this.ctlChannelStatus.Size = new System.Drawing.Size(160, 52);
+            this.ctlChannelStatus.TabIndex = 32;
+            // 
+            // ctlManual
+            // 
+            this.ctlManual.Location = new System.Drawing.Point(308, 291);
+            this.ctlManual.Name = "ctlManual";
+            this.ctlManual.Size = new System.Drawing.Size(112, 66);
+            this.ctlManual.TabIndex = 31;
+            // 
+            // ctlLicensing
+            // 
+            this.ctlLicensing.Location = new System.Drawing.Point(443, 311);
+            this.ctlLicensing.Name = "ctlLicensing";
+            this.ctlLicensing.Size = new System.Drawing.Size(128, 89);
+            this.ctlLicensing.TabIndex = 30;
+            // 
             // ctlApplications
             // 
-            this.ctlApplications.Location = new System.Drawing.Point(302, 91);
+            this.ctlApplications.Location = new System.Drawing.Point(463, 128);
             this.ctlApplications.Name = "ctlApplications";
             this.ctlApplications.Size = new System.Drawing.Size(78, 98);
             this.ctlApplications.TabIndex = 29;
             // 
             // ctlContactUsers
             // 
-            this.ctlContactUsers.Location = new System.Drawing.Point(373, 137);
+            this.ctlContactUsers.Location = new System.Drawing.Point(524, 273);
             this.ctlContactUsers.Name = "ctlContactUsers";
             this.ctlContactUsers.Size = new System.Drawing.Size(47, 32);
             this.ctlContactUsers.TabIndex = 28;
@@ -251,14 +273,14 @@
             // 
             // ctlContacts
             // 
-            this.ctlContacts.Location = new System.Drawing.Point(337, 123);
+            this.ctlContacts.Location = new System.Drawing.Point(580, 91);
             this.ctlContacts.Name = "ctlContacts";
             this.ctlContacts.Size = new System.Drawing.Size(56, 53);
             this.ctlContacts.TabIndex = 26;
             // 
             // ctlOutboxFailed
             // 
-            this.ctlOutboxFailed.Location = new System.Drawing.Point(308, 128);
+            this.ctlOutboxFailed.Location = new System.Drawing.Point(657, 273);
             this.ctlOutboxFailed.Name = "ctlOutboxFailed";
             this.ctlOutboxFailed.Size = new System.Drawing.Size(56, 48);
             this.ctlOutboxFailed.TabIndex = 25;
@@ -272,21 +294,21 @@
             // 
             // ctlServerTools
             // 
-            this.ctlServerTools.Location = new System.Drawing.Point(335, 132);
+            this.ctlServerTools.Location = new System.Drawing.Point(388, 157);
             this.ctlServerTools.Name = "ctlServerTools";
             this.ctlServerTools.Size = new System.Drawing.Size(101, 45);
             this.ctlServerTools.TabIndex = 23;
             // 
             // ctlClientTools
             // 
-            this.ctlClientTools.Location = new System.Drawing.Point(315, 160);
+            this.ctlClientTools.Location = new System.Drawing.Point(321, 224);
             this.ctlClientTools.Name = "ctlClientTools";
             this.ctlClientTools.Size = new System.Drawing.Size(43, 61);
             this.ctlClientTools.TabIndex = 22;
             // 
             // ctlConfiguration
             // 
-            this.ctlConfiguration.Location = new System.Drawing.Point(275, 148);
+            this.ctlConfiguration.Location = new System.Drawing.Point(273, 175);
             this.ctlConfiguration.Name = "ctlConfiguration";
             this.ctlConfiguration.Size = new System.Drawing.Size(56, 62);
             this.ctlConfiguration.TabIndex = 21;
@@ -300,14 +322,14 @@
             // 
             // ctlMessages
             // 
-            this.ctlMessages.Location = new System.Drawing.Point(308, 160);
+            this.ctlMessages.Location = new System.Drawing.Point(443, 247);
             this.ctlMessages.Name = "ctlMessages";
             this.ctlMessages.Size = new System.Drawing.Size(67, 50);
             this.ctlMessages.TabIndex = 20;
             // 
             // ctlArchivedOutbox
             // 
-            this.ctlArchivedOutbox.Location = new System.Drawing.Point(343, 182);
+            this.ctlArchivedOutbox.Location = new System.Drawing.Point(534, 238);
             this.ctlArchivedOutbox.Name = "ctlArchivedOutbox";
             this.ctlArchivedOutbox.Size = new System.Drawing.Size(37, 59);
             this.ctlArchivedOutbox.TabIndex = 18;
@@ -346,7 +368,7 @@
             // 
             // ctlChannels
             // 
-            this.ctlChannels.Location = new System.Drawing.Point(337, 182);
+            this.ctlChannels.Location = new System.Drawing.Point(414, 195);
             this.ctlChannels.Name = "ctlChannels";
             this.ctlChannels.Size = new System.Drawing.Size(43, 79);
             this.ctlChannels.TabIndex = 10;
@@ -380,25 +402,12 @@
             this.panelConfiguration.Size = new System.Drawing.Size(224, 522);
             this.panelConfiguration.TabIndex = 4;
             // 
-            // ctlLicensing
-            // 
-            this.ctlLicensing.Location = new System.Drawing.Point(302, 216);
-            this.ctlLicensing.Name = "ctlLicensing";
-            this.ctlLicensing.Size = new System.Drawing.Size(128, 89);
-            this.ctlLicensing.TabIndex = 30;
-            // 
-            // ctlManual
-            // 
-            this.ctlManual.Location = new System.Drawing.Point(308, 175);
-            this.ctlManual.Name = "ctlManual";
-            this.ctlManual.Size = new System.Drawing.Size(112, 66);
-            this.ctlManual.TabIndex = 31;
-            // 
             // frmControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1019, 593);
+            this.Controls.Add(this.ctlChannelStatus);
             this.Controls.Add(this.ctlManual);
             this.Controls.Add(this.ctlLicensing);
             this.Controls.Add(this.ctlApplications);
@@ -486,5 +495,6 @@
         private Core.Applications ctlApplications;
         private Core.License ctlLicensing;
         private Core.Manual ctlManual;
+        private Core.ChannelStatus ctlChannelStatus;
     }
 }

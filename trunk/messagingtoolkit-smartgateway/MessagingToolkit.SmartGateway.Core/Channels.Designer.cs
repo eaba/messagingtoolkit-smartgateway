@@ -127,19 +127,21 @@
             this.deleteToolStripMenuItem,
             this.deleteChannelToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 92);
             // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.modifyToolStripMenuItem.Text = "Manage Channel";
+            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.deleteToolStripMenuItem.Text = "Monitor Channel";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // deleteChannelToolStripMenuItem
             // 

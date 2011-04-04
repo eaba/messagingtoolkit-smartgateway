@@ -26,6 +26,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using MessagingToolkit.Core;
+using MessagingToolkit.SmartGateway.Core.Data.ActiveRecord;
+using MessagingToolkit.SmartGateway.Core.Properties;
+using MessagingToolkit.SmartGateway.Core.Helper;
+using MessagingToolkit.SmartGateway.Core.ViewModel;
+
 namespace MessagingToolkit.SmartGateway.Core
 {
     /// <summary>
@@ -33,6 +39,12 @@ namespace MessagingToolkit.SmartGateway.Core
     /// </summary>
     public partial class ChannelStatus : UserControl
     {
+        /// <summary>
+        /// Service event listener URL
+        /// </summary>
+        private string serviceEventListenerUrl = AppConfigSettings.GetString(ConfigParameter.ServiceEventListener, ModuleName.Service);
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ChannelStatus"/> class.
         /// </summary>
@@ -49,6 +61,43 @@ namespace MessagingToolkit.SmartGateway.Core
         private void ChannelStatus_Load(object sender, EventArgs e)
         {
             if (this.DesignMode) return;
+
+            SetupView();
+            RefreshView();
+        }
+
+
+        /// <summary>
+        /// Setups the view.
+        /// </summary>
+        private void SetupView()
+        {             
+            this.olvColChannelName.AspectGetter = delegate(object x) { return ((ChannelStatusView)x).Name; };
+            this.olvColPort.AspectGetter = delegate(object x) { return ((ChannelStatusView)x).Port; };
+            this.olvColOperator.AspectGetter = delegate(object x) { return ((ChannelStatusView)x).Operator; };
+            this.olvColSignalStrength.AspectGetter = delegate(object x) { return ((ChannelStatusView)x).SignalStrength; };
+            this.olvColStatus.AspectGetter = delegate(object x) { return ((ChannelStatusView)x).Status; };
+        }
+
+        /// <summary>
+        /// Refreshes the view.
+        /// </summary>
+        private void RefreshView()
+        {
+            List<ChannelStatusView> channels = new List<ChannelStatusView>();
+            foreach (GatewayConfig gwConfig in GatewayConfig.All().OrderBy(gw => gw.Id))
+            {
+                ChannelStatusView channel = new ChannelStatusView();
+                channel.Name = gwConfig.Id;
+                channel.Port = gwConfig.ComPort;
+                channels.Add(channel);
+            }
+
+            lvwChannelStatus.BeginUpdate();
+            lvwChannelStatus.SetObjects(channels);
+            lvwChannelStatus.EndUpdate();
+            lvwChannelStatus.Refresh();
+            
         }
     }
 }

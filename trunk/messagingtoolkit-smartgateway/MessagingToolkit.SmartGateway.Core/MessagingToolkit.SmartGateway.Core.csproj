@@ -249,6 +249,12 @@
     <Compile Include="frmContactGroup.Designer.cs">
       <DependentUpon>frmContactGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmContactSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmContactSearch.Designer.cs">
+      <DependentUpon>frmContactSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmContactUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -429,6 +435,7 @@
     <Compile Include="StartMenu.Designer.cs">
       <DependentUpon>StartMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ChannelStatusView.cs" />
     <Compile Include="WebConsole.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -543,6 +550,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmContactGroup.resx">
       <DependentUpon>frmContactGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmContactSearch.resx">
+      <DependentUpon>frmContactSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmContactUser.resx">
       <DependentUpon>frmContactUser.cs</DependentUpon>

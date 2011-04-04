@@ -202,6 +202,7 @@ namespace MessagingToolkit.SmartGateway.Core
                     updSendRetry.Value = gatewayConfig.SendRetry.Value;
                     updSendDelay.Value = gatewayConfig.SendDelay.Value;
                     chkRequestDeliveryStatusReport.Checked = gatewayConfig.RequestStatusReport.Value;
+                    chkDeleteAfterRetrieve.Checked = gatewayConfig.DeleteAfterRetrieve.Value;
 
                     chkAutoArchiveMessageLog.Checked = gatewayConfig.AutoArchiveLog.Value;
                     updArchiveMessageLogDay.Value = gatewayConfig.AutoArchiveLogInterval.Value;
@@ -424,6 +425,7 @@ namespace MessagingToolkit.SmartGateway.Core
                 gatewayConfig.SendRetry = Convert.ToInt32(updSendRetry.Value);
                 gatewayConfig.SendDelay = Convert.ToInt32(updSendDelay.Value);
                 gatewayConfig.RequestStatusReport = chkRequestDeliveryStatusReport.Checked;
+                gatewayConfig.DeleteAfterRetrieve = chkDeleteAfterRetrieve.Checked;
                 
                
                 // Message log

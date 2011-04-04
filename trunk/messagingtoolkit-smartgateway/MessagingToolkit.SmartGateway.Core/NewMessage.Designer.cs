@@ -47,11 +47,11 @@
             this.txtWapPushMessage = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
             this.txtWapPushUrl = new System.Windows.Forms.TextBox();
-            this.cboStatusReport = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.pnlMessage = new System.Windows.Forms.Panel();
             this.txtMessageContent = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.cboStatusReport = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.cboMessageType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.chkScheduleSendTime = new System.Windows.Forms.CheckBox();
@@ -238,18 +238,6 @@
             resources.ApplyResources(this.txtWapPushUrl, "txtWapPushUrl");
             this.txtWapPushUrl.Name = "txtWapPushUrl";
             // 
-            // cboStatusReport
-            // 
-            this.cboStatusReport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboStatusReport.FormattingEnabled = true;
-            resources.ApplyResources(this.cboStatusReport, "cboStatusReport");
-            this.cboStatusReport.Name = "cboStatusReport";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
             // pnlMessage
             // 
             this.pnlMessage.Controls.Add(this.txtMessageContent);
@@ -269,6 +257,18 @@
             // 
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
+            // 
+            // cboStatusReport
+            // 
+            this.cboStatusReport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStatusReport.FormattingEnabled = true;
+            resources.ApplyResources(this.cboStatusReport, "cboStatusReport");
+            this.cboStatusReport.Name = "cboStatusReport";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // cboMessageType
             // 
@@ -295,6 +295,7 @@
             resources.ApplyResources(this.btnBrowseTo, "btnBrowseTo");
             this.btnBrowseTo.Name = "btnBrowseTo";
             this.btnBrowseTo.UseVisualStyleBackColor = true;
+            this.btnBrowseTo.Click += new System.EventHandler(this.btnBrowseTo_Click);
             // 
             // npdQuantity
             // 

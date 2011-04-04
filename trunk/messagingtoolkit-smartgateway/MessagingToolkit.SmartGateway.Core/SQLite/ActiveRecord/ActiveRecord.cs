@@ -5284,6 +5284,25 @@ namespace MessagingToolkit.SmartGateway.Core.Data.ActiveRecord
             }
         }
 
+        bool? _DeleteAfterRetrieve;
+        public bool? DeleteAfterRetrieve
+        {
+            get { return _DeleteAfterRetrieve; }
+            set
+            {
+                if(_DeleteAfterRetrieve!=value){
+                    _DeleteAfterRetrieve=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="DeleteAfterRetrieve");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
 
 
         public DbCommand GetUpdateCommand() {
