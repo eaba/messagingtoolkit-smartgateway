@@ -64,7 +64,7 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
             }
 
             EventResponse defaultResponse = new EventResponse();
-            defaultResponse.Result = StringEnum.GetStringValue(EventNotificationResponse.Failed);
+            defaultResponse.Status = StringEnum.GetStringValue(EventNotificationResponse.Failed);
             return defaultResponse;
            
         }
@@ -76,7 +76,7 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
         /// <returns></returns>
         public static bool VerifyResponse(EventResponse response) 
         {
-            return (!string.IsNullOrEmpty(response.Result) && !response.Result.Equals(StringEnum.GetStringValue(EventNotificationResponse.Failed), StringComparison.OrdinalIgnoreCase));
+            return (!string.IsNullOrEmpty(response.Status) && !response.Status.Equals(StringEnum.GetStringValue(EventNotificationResponse.Failed), StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

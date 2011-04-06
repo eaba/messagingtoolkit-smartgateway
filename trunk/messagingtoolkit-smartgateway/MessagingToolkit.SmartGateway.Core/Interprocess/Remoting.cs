@@ -28,8 +28,21 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
     [Serializable]
     public class EventAction
     {
+
+        /// <summary>
+        /// Synchronous action
+        /// </summary>
+        public const string Synchronous = "S";
+
+        /// <summary>
+        /// Asynchronous action
+        /// </summary>
+        public const string ASynchronous = "A";
+
+
         public string Notification; // the text to be sent by master
         public string Computer;     // Computer name of the sender (=slave)
+        public string ActionType;   // Synchronous or asynchronous action type
 
         // to transfer more data expand here...
         public Dictionary<string, string> Values;
@@ -42,6 +55,7 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
             Notification = string.Empty;
             Values = new Dictionary<string, string>(1);
             Computer = Environment.MachineName;
+            ActionType = ASynchronous;
         }
 
         /// <summary>
@@ -53,13 +67,30 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
             Notification = notification;
             Values = new Dictionary<string, string>(1);
             Computer = Environment.MachineName;
+            ActionType = ASynchronous;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Notification - [{0}]\r\n", Notification);
+            sb.AppendFormat("Computer - [{0}]\r\n", Computer);
+            return sb.ToString();
         }
     }
         
     [Serializable]
     public class EventResponse
     {
-        public string Result;   // the response text sent by slave
+        public string Status;   // the response text sent by slave
+
+        
 
         // to transfer more data expand here...
     }

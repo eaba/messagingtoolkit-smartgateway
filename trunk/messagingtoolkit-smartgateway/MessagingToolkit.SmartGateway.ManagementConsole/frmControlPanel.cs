@@ -55,8 +55,7 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
     {
         // Static Logger
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        
+                
         /// <summary>
         /// Naming pattern for user control
         /// </summary>
@@ -556,7 +555,7 @@ namespace MessagingToolkit.SmartGateway.ManagementConsole
 
                 // Send back the processing
                 EventResponse response = new EventResponse();
-                response.Result = StringEnum.GetStringValue(EventNotificationResponse.OK);
+                response.Status = StringEnum.GetStringValue(EventNotificationResponse.OK);
                 return response;
             }
         }

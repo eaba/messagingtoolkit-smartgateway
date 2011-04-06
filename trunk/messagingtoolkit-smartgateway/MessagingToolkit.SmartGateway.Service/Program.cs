@@ -24,8 +24,12 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
+using System.Configuration;
+using System.Reflection;
+using System.IO;
 
 using log4net;
+using MessagingToolkit.SmartGateway.Core;
 
 namespace MessagingToolkit.SmartGateway.Service
 {
@@ -34,18 +38,20 @@ namespace MessagingToolkit.SmartGateway.Service
         // Static Logger
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
+            // Exception handling
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+          
+            // Configure the application configuration file
+            ConfigureAppConfig();
+
             if (!Environment.UserInteractive)
             {
                 log.Info("Start Message Server as Windows service");
-
-                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
                 ServiceBase[] ServicesToRun;
                 ServicesToRun = new ServiceBase[] 
 			                    { 
@@ -59,13 +65,10 @@ namespace MessagingToolkit.SmartGateway.Service
 
                 // Run as interactive exe in debug mode to allow easy
                 // debugging.
-
                 MessagingService service = new MessagingService();
                 service.StartService();
-
-
-                // Sleep the main thread indefinitely while the service code
-                // runs
+                
+                // Sleep the main thread indefinitely while the service code runs
                 Thread.Sleep(Timeout.Infinite);
 
             }
@@ -78,8 +81,28 @@ namespace MessagingToolkit.SmartGateway.Service
         /// <param name="e">The <see cref="System.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-             Exception ex = (Exception) e.ExceptionObject;
+             Exception ex = e.ExceptionObject as Exception;
              log.Error(string.Format("Unhandled exception occurred: {0}", ex.Message), ex);
+        }
+
+        /// <summary>
+        /// Configures the application configuration
+        /// </summary>
+        static void ConfigureAppConfig()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            // Get the connection strings section.
+            ConnectionStringsSection csSection = config.ConnectionStrings;
+            string dataSource = csSection.ConnectionStrings[ConfigParameter.ConnectionStringName].ConnectionString;
+            if (dataSource.Equals(ConfigParameter.DataSourceVariable))
+            {
+                string currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string db = "Data Source=" + Path.Combine(currentDirectory, ConfigParameter.SqLiteDbName);
+                csSection.ConnectionStrings[ConfigParameter.ConnectionStringName].ConnectionString = db;
+                config.Save(ConfigurationSaveMode.Modified, true);
+                ConfigurationManager.RefreshSection(config.ConnectionStrings.SectionInformation.SectionName);
+            }
+
         }
     }
 }

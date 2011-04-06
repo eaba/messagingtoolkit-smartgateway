@@ -39,6 +39,7 @@ using System.Runtime.Remoting.Services;
 using log4net;
 
 using MessagingToolkit.Core;
+using MessagingToolkit.Core.Base;
 using MessagingToolkit.Core.Helper;
 using MessagingToolkit.Core.Mobile;
 using MessagingToolkit.Core.Log;
@@ -583,15 +584,48 @@ namespace MessagingToolkit.SmartGateway.Service
             // Put the event in a queue and respond immediately
             lock (eventLock)
             {
-                // Queue the event and trigger the processing
-                eventQueue.Enqueue(action, EventPriority.Normal);
-                eventTrigger.Set();
+                try
+                {
+                    if (action.ActionType == EventAction.ASynchronous)
+                    {
+                        // Queue the event and trigger the processing
+                        eventQueue.Enqueue(action, EventPriority.Normal);
+                        eventTrigger.Set();
 
-                // Send back the processing
-                EventResponse response = new EventResponse();
-                response.Result = StringEnum.GetStringValue(EventNotificationResponse.OK);
-                return response;
+                        // Send back the processing
+                        EventResponse response = new EventResponse();
+                        response.Status = StringEnum.GetStringValue(EventNotificationResponse.OK);
+                        return response;
+                    }
+                    else
+                    {
+                        return ProcessSyncEvents(action);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(string.Format("Error processing incoming event - [{0}]", action.ToString()));
+                    log.Error(ex.Message, ex);                  
+                }
             }
+        }
+
+
+        /// <summary>
+        /// Processes synchronous events
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns>Event response</returns>
+        private EventResponse ProcessSyncEvents(EventAction action)
+        {
+            EventNotificationType notificationType = (EventNotificationType)StringEnum.Parse(typeof(EventNotificationType), action.Notification);
+            if (notificationType == EventNotificationType.QueryGatewayStatus)
+            {
+                return CheckGatewayStatus(action);
+            }
+            EventResponse response = new EventResponse();
+            response.Status = StringEnum.GetStringValue(EventNotificationResponse.Failed);
+            return response;
         }
 
         /// <summary>
@@ -620,10 +654,8 @@ namespace MessagingToolkit.SmartGateway.Service
                     EventNotificationType notificationType =  (EventNotificationType)StringEnum.Parse(typeof(EventNotificationType), action.Notification);
                     if (notificationType == EventNotificationType.NewGateway)
                     {
-                        // New gateway added
-                        string gatewayId = action.Values[EventParameter.GatewayId];
-                        log.Info(string.Format("New gateway [{0}] is added", gatewayId));
-                        InitializeGateway(gatewayId);
+                        // New gateway added                      
+                        InitializeGateway(action);
                     }
                     else if (notificationType == EventNotificationType.NewMessage)
                     {
@@ -633,6 +665,12 @@ namespace MessagingToolkit.SmartGateway.Service
                     else if (notificationType == EventNotificationType.RemoveGateway)
                     {
                         // Remove gateway
+                    }                   
+                    else if (notificationType == EventNotificationType.StartGateway)
+                    {
+                    }
+                    else if (notificationType == EventNotificationType.RestartGateway)
+                    {
                     }
                 }
                 else
@@ -644,17 +682,35 @@ namespace MessagingToolkit.SmartGateway.Service
         }
 
         /// <summary>
+        /// Checks the gateway status.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        private EventResponse CheckGatewayStatus(EventAction action)
+        {
+            string gatewayId = action.Values[EventParameter.GatewayId];
+            log.Info(string.Format("Query gateway status. ID is [{0}]", gatewayId));
+            IGateway gateway;
+            if (messageGatewayService.Find(gatewayId, out gateway))
+            {
+
+            }
+
+        }
+
+        /// <summary>
         /// Initializes the gateway.
         /// </summary>
-        /// <param name="gatewayId">The gateway id.</param>
-        private void InitializeGateway(string gatewayId)
+        /// <param name="action">The action.</param>
+        private void InitializeGateway(EventAction action)
         {
+            string gatewayId = action.Values[EventParameter.GatewayId];
+            log.Info(string.Format("New gateway [{0}] is added", gatewayId));
             GatewayConfig gwConfig = GatewayConfig.SingleOrDefault(g => g.Id == gatewayId);
             if (gwConfig != null)
             {
                 ConnectGateway(gwConfig);
-            }
-                
+            }                
         }
 
         /// <summary>

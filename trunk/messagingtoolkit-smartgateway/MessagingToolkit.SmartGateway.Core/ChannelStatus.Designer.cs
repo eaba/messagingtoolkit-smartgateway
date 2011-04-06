@@ -17,6 +17,10 @@
             {
                 components.Dispose();
             }
+            
+            // Stop the message poller
+            StopPoller();
+
             base.Dispose(disposing);
         }
 

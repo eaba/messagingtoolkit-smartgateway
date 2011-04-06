@@ -516,6 +516,11 @@ namespace MessagingToolkit.SmartGateway.Core
         /// </summary>
         public static string DefaultMessagePollingInterval = "DefaultMessagePollingInterval";
 
+        /// <summary>
+        /// Channel polling interval
+        /// </summary>
+        public static string ChannelPollingInterval = "ChannelPollingInterval";
+
 
         /// <summary>
         /// Connection string name
