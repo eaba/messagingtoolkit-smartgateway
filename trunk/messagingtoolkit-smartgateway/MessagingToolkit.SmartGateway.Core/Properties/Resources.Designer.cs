@@ -393,6 +393,15 @@ namespace MessagingToolkit.SmartGateway.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gateway is being started now.
+        /// </summary>
+        internal static string MsgGatewayStarting {
+            get {
+                return ResourceManager.GetString("MsgGatewayStarting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator group cannot be modified.
         /// </summary>
         internal static string MsgGroupNameCannotEdit {
@@ -506,6 +515,15 @@ namespace MessagingToolkit.SmartGateway.Core.Properties {
         internal static string MsgNameRequired {
             get {
                 return ResourceManager.GetString("MsgNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No channel is selected.
+        /// </summary>
+        internal static string MsgNoChannelSelected {
+            get {
+                return ResourceManager.GetString("MsgNoChannelSelected", resourceCulture);
             }
         }
         

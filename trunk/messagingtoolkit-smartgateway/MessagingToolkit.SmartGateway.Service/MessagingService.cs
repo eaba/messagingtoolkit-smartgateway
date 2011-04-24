@@ -45,6 +45,7 @@ using MessagingToolkit.Core.Mobile;
 using MessagingToolkit.Core.Log;
 using MessagingToolkit.Core.Mobile.Message;
 using MessagingToolkit.Core.Mobile.Event;
+using MessagingToolkit.Core.Service;
 
 using MessagingToolkit.SmartGateway.Core;
 using MessagingToolkit.SmartGateway.Core.Helper;
@@ -218,7 +219,8 @@ namespace MessagingToolkit.SmartGateway.Service
         /// Setups the service.
         /// </summary>
         private void InitializeService()
-        {           
+        {
+            PrepareService();
             StartMessageService();                      
             StartEventListener();
             StartPollers();
@@ -228,6 +230,30 @@ namespace MessagingToolkit.SmartGateway.Service
             // SendNotification(action);
         }
 
+
+        /// <summary>
+        /// Prepares the service.
+        /// </summary>
+        private void PrepareService()
+        {
+            try
+            {
+                // Update sending status back to blank
+                IQueryable<OutgoingMessage> messages = OutgoingMessage.All().Where(msg => msg.Status == StringEnum.GetStringValue(MessageStatus.Sending));
+                foreach (OutgoingMessage msg in messages)
+                {
+                    msg.Status = string.Empty;
+                    msg.LastUpdate = DateTime.Now;
+                    msg.Update();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error preparing the service");
+                log.Error(ex.Message, ex);
+            }
+
+        }
 
         /// <summary>
         /// Starts the message service.
@@ -297,12 +323,28 @@ namespace MessagingToolkit.SmartGateway.Service
                 }
             }
 
+            if (!string.IsNullOrEmpty(gwConfig.LogSettings))
+            {
+                LogLevel logLevel;
+                if (EnumMatcher.LoggingLevel.TryGetValue(gwConfig.LogSettings, out logLevel))
+                {
+                    config.LogLevel = logLevel;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(gwConfig.Pin))
+            {
+                config.Pin = gwConfig.Pin;                
+            }
+
+           
             MessageGateway<IMobileGateway, MobileGatewayConfiguration> messageGateway =
                 MessageGateway<IMobileGateway, MobileGatewayConfiguration>.NewInstance();
             try
             {
                 IMobileGateway mobileGateway;
                 mobileGateway = messageGateway.Find(config);
+                
                 if (mobileGateway == null)
                 {
                     log.Error(string.Format("Error connecting to gateway. Check the log file", config.PortName));
@@ -608,6 +650,8 @@ namespace MessagingToolkit.SmartGateway.Service
                     log.Error(ex.Message, ex);                  
                 }
             }
+
+            return new EventResponse();
         }
 
 
@@ -622,7 +666,7 @@ namespace MessagingToolkit.SmartGateway.Service
             if (notificationType == EventNotificationType.QueryGatewayStatus)
             {
                 return CheckGatewayStatus(action);
-            }
+            }           
             EventResponse response = new EventResponse();
             response.Status = StringEnum.GetStringValue(EventNotificationResponse.Failed);
             return response;
@@ -648,7 +692,7 @@ namespace MessagingToolkit.SmartGateway.Service
 
                 if (action != null)
                 {
-                    log.Info(string.Format("Processing events [{0}] from {1}", action.Notification, action.Computer));
+                    log.Debug(string.Format("Processing events [{0}] from {1}", action.Notification, action.Computer));
 
                     // Start processing events
                     EventNotificationType notificationType =  (EventNotificationType)StringEnum.Parse(typeof(EventNotificationType), action.Notification);
@@ -656,6 +700,11 @@ namespace MessagingToolkit.SmartGateway.Service
                     {
                         // New gateway added                      
                         InitializeGateway(action);
+                    }
+                    else if (notificationType == EventNotificationType.StartGateway)
+                    {
+                        // Start gateway
+                        StartGateway(action);
                     }
                     else if (notificationType == EventNotificationType.NewMessage)
                     {
@@ -665,12 +714,17 @@ namespace MessagingToolkit.SmartGateway.Service
                     else if (notificationType == EventNotificationType.RemoveGateway)
                     {
                         // Remove gateway
-                    }                   
-                    else if (notificationType == EventNotificationType.StartGateway)
+                        StopGateway(action);
+                    }
+                    else if (notificationType == EventNotificationType.StopGateway)
                     {
+                        // Stop gateway
+                        StopGateway(action);
                     }
                     else if (notificationType == EventNotificationType.RestartGateway)
                     {
+                        StopGateway(action);
+                        StartGateway(action);
                     }
                 }
                 else
@@ -678,6 +732,72 @@ namespace MessagingToolkit.SmartGateway.Service
                     if (eventQueue.Count() == 0)
                         eventTrigger.WaitOne();       // wait for events
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Starts the gateway.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        private EventResponse StartGateway(EventAction action)
+        {
+            string gatewayId = action.Values[EventParameter.GatewayId];
+            log.Debug(string.Format("Start gateway. ID is [{0}]", gatewayId));
+            EventResponse response = new EventResponse();
+
+             IGateway gateway;
+             if (messageGatewayService.Find(gatewayId, out gateway))
+             {
+                 // Check if the status is Stopped/Failed/Restart, if yes, remove and restart
+                 if (gateway.Status == GatewayStatus.Failed ||
+                     gateway.Status == GatewayStatus.Stopped ||
+                     gateway.Status == GatewayStatus.Restart)
+                 {
+                     messageGatewayService.Remove(gatewayId);
+                     ConnectGateway(gatewayId);                     
+                 }
+             }
+             else
+             {
+                 ConnectGateway(gatewayId);
+             }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Stops the gateway.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        private EventResponse StopGateway(EventAction action)
+        {
+            string gatewayId = action.Values[EventParameter.GatewayId];
+            log.Debug(string.Format("Stop gateway. ID is [{0}]", gatewayId));
+            EventResponse response = new EventResponse();
+
+            IGateway gateway;
+            if (messageGatewayService.Find(gatewayId, out gateway))
+            {             
+                messageGatewayService.Remove(gatewayId);                 
+            }          
+
+            return response;
+        }
+
+        /// <summary>
+        /// Connects the gateway.
+        /// </summary>
+        /// <param name="gatewayId">The gateway id.</param>
+        private void ConnectGateway(string gatewayId)
+        {
+            GatewayConfig gwConfig = GatewayConfig.SingleOrDefault(g => g.Id == gatewayId);
+            if (gwConfig != null)
+            {
+                ConnectGateway(gwConfig);
             }
         }
 
@@ -689,13 +809,28 @@ namespace MessagingToolkit.SmartGateway.Service
         private EventResponse CheckGatewayStatus(EventAction action)
         {
             string gatewayId = action.Values[EventParameter.GatewayId];
-            log.Info(string.Format("Query gateway status. ID is [{0}]", gatewayId));
+            log.Debug(string.Format("Check gateway status. ID is [{0}]", gatewayId));
+            EventResponse response = new EventResponse();            
             IGateway gateway;
             if (messageGatewayService.Find(gatewayId, out gateway))
             {
-
+                // Gateway found
+                response.Status = StringEnum.GetStringValue(EventNotificationResponse.OK);
+                response.Results.Add(EventParameter.GatewayStatus, StringEnum.GetStringValue(gateway.Status));
+                if (gateway.Status == GatewayStatus.Started)
+                {
+                    IMobileGateway mobileGateway = gateway as IMobileGateway;
+                    response.Results.Add(EventParameter.GatewayOperator, mobileGateway.NetworkOperator.OperatorInfo);
+                    response.Results.Add(EventParameter.GatewaySignalStrength, Convert.ToString(mobileGateway.SignalQuality.SignalStrengthPercent));
+                }
+            }
+            else
+            {                
+                response.Status = StringEnum.GetStringValue(EventNotificationResponse.Failed);
+                response.Results.Add(EventParameter.GatewayStatus, StringEnum.GetStringValue(GatewayStatus.Stopped));
             }
 
+            return response;
         }
 
         /// <summary>

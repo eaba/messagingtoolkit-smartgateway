@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MessagingToolkit.SmartGateway.Portal")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyCompany("TWIT88.COM")]
 [assembly: AssemblyProduct("MessagingToolkit.SmartGateway.Portal")]
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2010")]
+[assembly: AssemblyCopyright("Copyright © TWIT88.COM 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

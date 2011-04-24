@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MessagingToolkit.Core;
+
 namespace MessagingToolkit.SmartGateway.Core.Interprocess
 {
     [Serializable]
@@ -88,13 +90,30 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
     [Serializable]
     public class EventResponse
     {
-        public string Status;   // the response text sent by slave
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventResponse"/> class.
+        /// </summary>
+        public EventResponse()
+        {
+            Status = StringEnum.GetStringValue(EventNotificationResponse.OK);
+            Results = new Dictionary<string,string>();
+        }
+        /// <summary>
+        /// Response status
+        /// </summary>
+        public string Status;  
 
-        
+        /// <summary>
+        /// Results
+        /// </summary>
+        public Dictionary<string, string> Results;
 
         // to transfer more data expand here...
     }
 
+    /// <summary>
+    /// Event invocation 
+    /// </summary>
     public class EventInvocation : MarshalByRefObject
     {
         public delegate EventResponse Received(EventAction action);
@@ -107,6 +126,11 @@ namespace MessagingToolkit.SmartGateway.Core.Interprocess
         {
         }
 
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
         public EventResponse Invoke(EventAction action)
         {
             if (EventReceived != null)

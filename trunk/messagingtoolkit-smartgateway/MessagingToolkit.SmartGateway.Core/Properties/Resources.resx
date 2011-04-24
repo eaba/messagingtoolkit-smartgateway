@@ -376,4 +376,10 @@
   <data name="MsgLicenseInformationSaved" xml:space="preserve">
     <value>Licensing information is saved</value>
   </data>
+  <data name="MsgNoChannelSelected" xml:space="preserve">
+    <value>No channel is selected</value>
+  </data>
+  <data name="MsgGatewayStarting" xml:space="preserve">
+    <value>Gateway is being started now</value>
+  </data>
 </root>

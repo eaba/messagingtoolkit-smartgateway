@@ -547,6 +547,13 @@ namespace MessagingToolkit.SmartGateway.Core
     public static class EventParameter
     {
         public static string GatewayId = "GatewayId";
+
+        public static string GatewayStatus = "GatewayStatus";
+
+        public static string GatewayOperator = "GatewayOperator";
+
+        public static string GatewaySignalStrength = "GatewaySignalStrength";
+               
     }
 
     /// <summary>

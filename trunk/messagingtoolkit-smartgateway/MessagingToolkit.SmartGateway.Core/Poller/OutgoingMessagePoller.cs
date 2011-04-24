@@ -76,6 +76,7 @@ namespace MessagingToolkit.SmartGateway.Core.Poller
                                                                                         msg.ScheduledDate <= DateTime.Now 
                                                                                      )).OrderBy(msg => msg.LastUpdate);
 
+
             // Send out messages
             foreach (OutgoingMessage message in messages)
             {
@@ -122,14 +123,59 @@ namespace MessagingToolkit.SmartGateway.Core.Poller
 
                     // Update status to "Sending"
                     message.Status = StringEnum.GetStringValue(MessageStatus.Sending);
+                    message.LastUpdate = DateTime.Now;
                     message.Update();
                 }
                 else if (messageType == OutgoingMessageType.WAPPush)
                 {
+                    Wappush wappush = Wappush.NewInstance(message.Recipient, message.WapUrl, message.Message);
+
+                    ServiceIndicationAction signal;
+                    if (EnumMatcher.ServiceIndication.TryGetValue(message.WapSignal, out signal))
+                    {
+                        wappush.Signal = signal;
+                    }
+                    wappush.CreateDate = message.WapCreateDate.Value;
+                    wappush.ExpireDate = message.WapExpiryDate.Value;
+
+                    MessageStatusReport statusReport = (MessageStatusReport)StringEnum.Parse(typeof(MessageStatusReport), message.StatusReport);
+                    if (statusReport == MessageStatusReport.StatusReport)
+                        wappush.StatusReportRequest = MessageStatusReportRequest.SmsReportRequest;
+                    else if (statusReport == MessageStatusReport.NoStatusReport)
+                        wappush.StatusReportRequest = MessageStatusReportRequest.NoSmsReportRequest;
+
+                    wappush.DcsMessageClass = EnumMatcher.MessageClass[message.MessageClass];
+                    wappush.QueuePriority = EnumMatcher.MessagePriority[message.Priority];
+
+                    IGateway gateway = messageGatewayService.Router.GetRoute(wappush);
+                    GatewayConfig gatewayConfig = GatewayConfig.SingleOrDefault(g => g.Id == gateway.Id);
+                    if (gatewayConfig != null)
+                    {
+                        // Message validity period
+                        if (!string.IsNullOrEmpty(gatewayConfig.MessageValidity))
+                            wappush.ValidityPeriod = EnumMatcher.ValidityPeriod[gatewayConfig.MessageValidity];
+
+                        // Status report
+                        if (statusReport == MessageStatusReport.FollowChannel)
+                        {
+                            if (gatewayConfig.RequestStatusReport.Value)
+                                wappush.StatusReportRequest = MessageStatusReportRequest.SmsReportRequest;
+                            else
+                                wappush.StatusReportRequest = MessageStatusReportRequest.NoSmsReportRequest;
+                        }
+                    }
+
+                    outgoingMessages.Add(wappush);
+
+                    // Update status to "Sending"
+                    message.Status = StringEnum.GetStringValue(MessageStatus.Sending);
+                    message.LastUpdate = DateTime.Now;
+                    message.Update();
+
                 }
 
                 int count = messageGatewayService.SendMessages(outgoingMessages);                
-                log.Info(string.Format("Messages are queued for sending. Count of number of messages is [{0}]", count));
+                log.Debug(string.Format("Messages are queued for sending. Count of number of messages is [{0}]", count));
             }           
 
         }
