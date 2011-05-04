@@ -744,7 +744,7 @@ namespace MessagingToolkit.SmartGateway.Service
         private EventResponse StartGateway(EventAction action)
         {
             string gatewayId = action.Values[EventParameter.GatewayId];
-            log.Debug(string.Format("Start gateway. ID is [{0}]", gatewayId));
+            if (log.IsDebugEnabled) log.Debug(string.Format("Start gateway. ID is [{0}]", gatewayId));
             EventResponse response = new EventResponse();
 
              IGateway gateway;

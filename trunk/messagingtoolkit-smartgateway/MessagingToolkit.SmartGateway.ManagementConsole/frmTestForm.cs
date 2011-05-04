@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MessagingToolkit.SmartGateway.Core
+namespace MessagingToolkit.SmartGateway.ManagementConsole
 {
     public partial class frmTestForm : Form
     {

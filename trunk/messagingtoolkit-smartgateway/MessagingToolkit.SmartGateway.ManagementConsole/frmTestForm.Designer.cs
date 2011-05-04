@@ -1,4 +1,4 @@
-﻿namespace MessagingToolkit.SmartGateway.Core
+﻿namespace MessagingToolkit.SmartGateway.ManagementConsole
 {
     partial class frmTestForm
     {
@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(598, 489);
+            this.ClientSize = new System.Drawing.Size(667, 466);
             this.Name = "frmTestForm";
             this.Text = "frmTestForm";
             this.ResumeLayout(false);

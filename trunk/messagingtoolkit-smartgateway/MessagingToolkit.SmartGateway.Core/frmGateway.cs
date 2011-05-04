@@ -139,7 +139,8 @@ namespace MessagingToolkit.SmartGateway.Core
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void frmGateway_Load(object sender, EventArgs e)
-        {
+        {         
+
             // General settings
             SetupGeneralSettings();
 

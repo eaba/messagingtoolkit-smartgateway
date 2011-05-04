@@ -101,13 +101,13 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\3rdPartyLibraries\SQLite-1.0.65.0-binaries\bin\System.Data.SQLite.DLL</HintPath>
+      <HintPath>..\3rdPartyLibraries\SQLite.NET\bin\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\3rdPartyLibraries\SQLite-1.0.65.0-binaries\bin\System.Data.SQLite.Linq.dll</HintPath>
+      <HintPath>..\3rdPartyLibraries\SQLite.NET\bin\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -273,6 +273,12 @@
     <Compile Include="frmNewMessage.Designer.cs">
       <DependentUpon>frmNewMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTestForm.Designer.cs">
+      <DependentUpon>frmTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\FormHelper.cs" />
     <Compile Include="frmFileViewer.cs">
       <SubType>Form</SubType>
@@ -297,12 +303,6 @@
     </Compile>
     <Compile Include="frmServiceControl.Designer.cs">
       <DependentUpon>frmServiceControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTestForm.Designer.cs">
-      <DependentUpon>frmTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\MessageHelper.cs" />
     <Compile Include="Helper\UserHelper.cs" />
