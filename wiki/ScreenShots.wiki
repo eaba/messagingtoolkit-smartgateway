@@ -14,7 +14,6 @@ http://messagingtoolkit-smartgateway.googlecode.com/files/new_message.png
 
 
 = Channel =
-= Message View = 
 http://messagingtoolkit-smartgateway.googlecode.com/files/channel.png
 
 
